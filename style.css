@@ -1,0 +1,10 @@
+*{    
+    font-family: 'DM Sans', sans-serif;
+    color: #000;
+    scroll-behavior: smooth;
+}
+body{
+    width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
