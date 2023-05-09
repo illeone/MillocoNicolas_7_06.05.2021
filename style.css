@@ -51,3 +51,104 @@ header input {
   transform: rotate(7deg);
   transition: 0.4s;
 }
+
+/* Fin du style du HEAD */
+/*********************************************/
+
+nav {
+  margin-top: 2%;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: row;
+  padding: 0;
+  z-index: 1000;
+  position: relative;
+}
+
+.search-input {
+  height: 60px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+nav input {
+  all: unset;
+  font: 16px;
+  color: #ffffff;
+  height: 100%;
+  width: 100%;
+  padding: 0px 10px;
+  text-align: left;
+}
+nav span {
+  all: unset;
+  text-align: center;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  line-height: 50px;
+}
+nav span i {
+  color: #ffffff;
+  font-size: 22px;
+}
+
+.selector {
+  height: 60px;
+  margin-right: 20px;
+  width: 150px;
+  border-radius: 5px;
+}
+
+/******** Tags Blue ********/
+#selector-blue {
+  background-color: #3282f7;
+}
+#selector-blue:hover {
+  background-color: #0462f0;
+}
+#input-blue {
+  cursor: pointer;
+}
+#input-blue::placeholder {
+  color: white;
+  transition: 0.7s;
+  width: 5rem;
+}
+
+
+/******** Tags Green ********/
+#selector-green {
+  background-color: #68d9a4;
+}
+#selector-green:hover {
+  background-color: #16bb6e;
+}
+#input-green {
+  cursor: pointer;
+}
+#input-green::placeholder {
+  color: white;
+  transition: 0.7s;
+  width: 4.2rem;
+}
+
+/******** Tags Red ********/
+#selector-red {
+  background-color: #ed6454;
+}
+#selector-red:hover {
+  background-color: #db311e;
+}
+#input-red {
+  cursor: pointer;
+}
+#input-red::placeholder {
+  color: white;
+  transition: 0.7s;
+  width: 4.8rem;
+}
