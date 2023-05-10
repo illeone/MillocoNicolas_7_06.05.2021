@@ -9,7 +9,6 @@ class Recipe
         this.description = data.description;
     }
     
-    //-- Contenu HTML des recettes 
     RecipeCardHTML()
     {
         return `<article class="articleRecipes">

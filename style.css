@@ -152,3 +152,72 @@ nav span i {
   transition: 0.7s;
   width: 4.8rem;
 }
+
+/******************  Recipes Card      ***************************/
+
+main{
+  margin-top: 2%;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  flex-wrap: wrap;
+  gap: 75px;
+  z-index: 1;
+}
+
+article{
+  width: 350px;
+  border-radius: 5px;
+  background-color: #E7E7E7;
+  margin-bottom: 30px;
+}
+article img{
+  width: 100%;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+}
+.titleArticle {
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 5% 5% 0 5%;
+
+}
+.titleArticle h2,i,span{
+  display: inline;
+  color: #000;
+  font-size: 12px;
+  font-weight: 400;
+}
+.titleArticle span{
+text-align: right;
+font-weight: 600;
+width: 120px;
+}
+
+.basArticle{
+  display: flex;
+  flex-direction: row;
+  padding:2% 5% 5% 5%;
+}
+.basArticle p{
+ display: inline;
+ width: 100%;
+
+ font-size: 11px;
+ color: #000000;
+}
+.ingredientsArticle{
+  max-width: 120px;
+}
+
+.recetteArticle{
+  margin-left: 10px;
+  width: 150px;
+  max-height: 128px;
+  overflow-y: hidden;
+  text-overflow: ellipsis;
+}
