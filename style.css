@@ -221,3 +221,85 @@ width: 120px;
   overflow-y: hidden;
   text-overflow: ellipsis;
 }
+
+/* les recettes */
+.articleRecipes{
+  height: 24.2rem;
+  border-radius: 5px;
+  transition: 0.8s;
+}
+.articleRecipes:hover{
+  transform: scale(1.02);
+  transition: 0.8s;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+}
+.articleRecipes:hover .recipe_photo{
+  background-color: #dfbebe;
+  transition: 0.8s;
+}
+.recipe_photo{
+  height: 10rem;
+  background-color: #C7BEBE;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  cursor: pointer;
+  transition: 0.8s;
+}
+
+.recipeName{
+  font-size:medium;
+  font-weight: 500;
+  max-width: 12.5rem;
+}
+
+.recipeTitle{
+  margin-right: 20px;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-left: 1rem;
+  margin-right: 0.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.recipeDuration{
+  display: flex;
+  justify-content: space-between;
+  width: 5.2rem;
+}
+.fa-clock{
+  font-size:medium;
+  margin-top: 1px;
+}
+.time{
+  font-size: medium;
+  font-weight: 600;
+  margin-right: 5px;
+}
+
+.recipeInstructions{
+  display: flex;
+  /* margin-left: 1rem;
+  margin-right: 1rem; */   
+}
+.recipe_ingredients{
+  font-size: 10px;
+  /* overflow: hidden; */
+  text-overflow: ellipsis;
+  width: 11rem;    
+}
+.ingredient_detail{
+  font-weight:700;
+}
+.recipe_description{
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 45%;
+  height: 8.7rem;
+  padding: 2px;
+  overflow-y: scroll;
+  margin-top: 11px;
+  max-height: 9rem;
+}
