@@ -111,6 +111,15 @@ nav span i {
 #selector-blue:hover {
   background-color: #0462f0;
 }
+.blues{
+  background-color: #3282F7;
+  width: 650px;
+  transition:0.8s;
+  position: absolute;
+  top: 3.5rem;
+  overflow-y: scroll;
+  max-height: 380px;
+}
 #input-blue {
   cursor: pointer;
 }

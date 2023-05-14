@@ -55,15 +55,40 @@ const filterResearch = (recipe) => {
     }
   
     displayRecipe(result);
-  
+
     return result;
   }
+
+  const getIngredients = (recipe) => {
+    let ingredients = [];
+    
+    for (const element of recipe) {
+      for (const ingredient of element.ingredients) {
+        ingredients.push(ingredient.ingredient);
+      }
+    }
+    
+    // Élimine les doublons et trie les ingrédients par ordre alphabétique
+    ingredients = Array.from(new Set(ingredients)).sort();
+    return ingredients;
+  }
   
+  const displayIngredients = (recipe) => {
+    const ingredientBlue = document.getElementById("blues");  
+    const ingredients = getIngredients(recipe);
+    
+    ingredientBlue.innerHTML = "";
+      
+    for (let i = 0; i < ingredients.length; i++) {
+      ingredientBlue.innerHTML += `<li class="tags_blue tags">${ingredients[i]}</li>`;   
+    }
+  }
 
 const init = async () => {
   const recipe = await loadData();
   displayRecipe(recipe);
   filterResearch(recipe);
+  displayIngredients(recipe);
 };
 
 init();
