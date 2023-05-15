@@ -191,6 +191,15 @@ div.list{
 #selector-red:hover {
   background-color: #db311e;
 }
+.reds{
+  background-color: #ed6454;
+  width: 650px;
+  transition:0.8s;
+  position: absolute;
+  top: 3.5rem;
+  overflow-y: scroll;
+  max-height: 380px;
+}
 #input-red {
   cursor: pointer;
 }
