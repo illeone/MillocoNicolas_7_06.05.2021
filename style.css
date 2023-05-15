@@ -175,6 +175,15 @@ div.list{
 #selector-green:hover {
   background-color: #16bb6e;
 }
+.greens{
+  background-color: #68d9a4;
+  width: 650px;
+  transition:0.8s;
+  position: absolute;
+  top: 3.5rem;
+  overflow-y: scroll;
+  max-height: 380px;
+}
 #input-green {
   cursor: pointer;
 }

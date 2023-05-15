@@ -73,6 +73,17 @@ const filterResearch = (recipe) => {
     return ingredients;
   }
 
+  const getAppliances = (recipe) => {
+    let appliances = [];
+  
+    for (const element of recipe) {
+      appliances.push(element.appliance);
+    }
+  
+    appliances = Array.from(new Set(appliances)).sort();
+    return appliances;
+  }
+
   const getUstensils = (recipe) => {
     let ustensils = [];
   
@@ -94,6 +105,17 @@ const filterResearch = (recipe) => {
       
     for (let i = 0; i < ingredients.length; i++) {
       ingredientBlue.innerHTML += `<li class="tags_blue tags">${ingredients[i]}</li>`;   
+    }
+  }
+
+  const displayAppliances = (recipe) => {
+    const appliancesGreen = document.getElementById("greens");  
+    const appliances = getAppliances(recipe);
+    
+    appliancesGreen.innerHTML = "";
+      
+    for (let i = 0; i < appliances.length; i++) {
+      appliancesGreen.innerHTML += `<li class="tags_green tags">${appliances[i]}</li>`;   
     }
   }
 
@@ -135,7 +157,8 @@ const init = async () => {
   displayRecipe(recipe);
   filterResearch(recipe);
   displayIngredients(recipe);
-  displayUstensils(recipe)
+  displayAppliances(recipe);
+  displayUstensils(recipe);
 };
 
 init();
