@@ -130,25 +130,58 @@ const filterResearch = (recipe) => {
     }
   }
 
-  const blueTags = document.getElementById("blues");
-  const blueArrow = document.querySelector(".fa-angle-down");
-  const searchBlue = document.querySelector(".blue");
-  const placeholderBlue = document.getElementById("search-input-blue");
+const blueTags = document.getElementById("blues");
+const greenTags = document.getElementById("greens");
+const redTags = document.getElementById("reds");
+
+const blueArrow = document.querySelector(".blue-arrow");
+const greenArrow = document.querySelector(".green-arrow");
+const redArrow = document.querySelector(".red-arrow");
+
+const searchBlue = document.querySelector(".blue");
+const searchGreen = document.querySelector(".green");
+const searchRed = document.querySelector(".red");
+
+const placeholderBlue = document.getElementById("search-input-blue");
+const placeholderGreen = document.getElementById("search-input-green");
+const placeholderRed = document.getElementById("search-input-red");
 
   document.getElementById("search-input-blue").addEventListener("click", () => {
     blueTags.style.display = "block";  
-    blueArrow.style.transform = "rotate(360deg)";
+    blueArrow.style.transform = "rotate(180deg)";
     searchBlue.style.width = "650px";
     searchBlue.style.transition = '0.8s';
   });
 
+  document.getElementById("search-input-green").addEventListener("click", () => {
+    greenTags.style.display = "block";
+    greenArrow.style.transform = "rotate(180deg)";
+    searchGreen.style.width = "650px";
+    searchGreen.style.transition = '0.8s';
+  });
+
+  document.getElementById("search-input-red").addEventListener("click", () => {
+    redTags.style.display = "block";
+    redArrow.style.transform = "rotate(180deg)";
+    searchRed.style.width = "650px";
+    searchRed.style.transition = '0.8s';
+  });
+
   window.addEventListener('mouseup', function(event){
     var blue = document.getElementById('blues');
+    var green = document.getElementById('greens');
+    var red = document.getElementById('reds');
 
-    if(event.target !=blue) {
+    if(event.target !=blue,green,red) {
       blue.style.display = 'none';
-      blueArrow.style.transform = "rotate(180deg)";
+      green.style.display = 'none';
+      red.style.display = 'none';
+      blueArrow.style.transform = "rotate(0deg)";
+      greenArrow.style.transform = "rotate(0deg)";
+      redArrow.style.transform = "rotate(0deg)";
       searchBlue.style.width = "150px";
+      searchGreen.style.width = "150px";
+      searchRed.style.width = "150px";
     } 
   })
 
