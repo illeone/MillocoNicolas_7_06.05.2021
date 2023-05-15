@@ -117,6 +117,7 @@ div ul{
 }
 
 div ul li{
+  display: inline-block; 
   overflow:auto;
   max-height: 26px;
   overflow: hidden;

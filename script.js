@@ -85,12 +85,15 @@ const filterResearch = (recipe) => {
   }
 
   const blueTags = document.getElementById("blues");
+  const blueArrow = document.querySelector(".fa-angle-down");
   const searchBlue = document.querySelector(".blue");
   const placeholderBlue = document.getElementById("search-input-blue");
 
   document.getElementById("search-input-blue").addEventListener("click", () => {
     blueTags.style.display = "block";  
+    blueArrow.style.transform = "rotate(360deg)";
     searchBlue.style.width = "650px";
+    searchBlue.style.transition = '0.8s';
   });
 
   window.addEventListener('mouseup', function(event){
@@ -98,6 +101,7 @@ const filterResearch = (recipe) => {
 
     if(event.target !=blue) {
       blue.style.display = 'none';
+      blueArrow.style.transform = "rotate(180deg)";
       searchBlue.style.width = "150px";
     } 
   })
