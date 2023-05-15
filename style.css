@@ -104,6 +104,43 @@ nav span i {
   border-radius: 5px;
 }
 
+/******** Tags List ********/
+
+div ul{
+  flex-wrap: wrap;
+  display: flex; 
+  max-width: 800px;
+  padding: 0; 
+  overflow:inherit;
+  width: auto;
+  margin-bottom: 20px; 
+}
+
+div ul li{
+  overflow:auto;
+  max-height: 26px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #E7E7E7;
+  list-style: none;
+  padding: 3px;
+  margin:0 10px;
+  width: 185px;
+}
+div ul li:hover{
+  cursor: auto;
+}
+
+div.list{
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+#blues{
+  display: none;
+  padding: 0.5rem;
+}
+
 /******** Tags Blue ********/
 #selector-blue {
   background-color: #3282f7;

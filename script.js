@@ -84,6 +84,24 @@ const filterResearch = (recipe) => {
     }
   }
 
+  const blueTags = document.getElementById("blues");
+  const searchBlue = document.querySelector(".blue");
+  const placeholderBlue = document.getElementById("search-input-blue");
+
+  document.getElementById("search-input-blue").addEventListener("click", () => {
+    blueTags.style.display = "block";  
+    searchBlue.style.width = "650px";
+  });
+
+  window.addEventListener('mouseup', function(event){
+    var blue = document.getElementById('blues');
+
+    if(event.target !=blue) {
+      blue.style.display = 'none';
+      searchBlue.style.width = "150px";
+    } 
+  })
+
 const init = async () => {
   const recipe = await loadData();
   displayRecipe(recipe);
