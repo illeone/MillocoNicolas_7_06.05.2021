@@ -97,17 +97,29 @@ const filterResearch = (recipe) => {
     return ustensils;
   } 
   
-  const displayIngredients = (recipe) => {
-    const ingredientBlue = document.getElementById("blues");  
-    const ingredients = getIngredients(recipe);
-    
-    ingredientBlue.innerHTML = "";
-      
-    for (let i = 0; i < ingredients.length; i++) {
-      ingredientBlue.innerHTML += `<li class="tags_blue tags">${ingredients[i]}</li>`;   
-    }
-  }
+  const displayIngredients = (recipe, searchIngredient) => {
+    const ingredientBlue = document.getElementById("blues");
+    let allIngredients = getIngredients(recipe);
 
+    let ingredients = [];
+  
+    if (searchIngredient) {
+        for (let i = 0; i < allIngredients.length; i++) {
+          if (allIngredients[i].toLowerCase().includes(searchIngredient)) {
+            ingredients.push(allIngredients[i]);
+          }
+        }
+      } else {
+        ingredients = allIngredients;
+      }
+   
+    ingredientBlue.innerHTML = "";
+  
+    for (let i = 0; i < ingredients.length; i++) {
+      ingredientBlue.innerHTML += `<li class="tags_blue tags">${ingredients[i]}</li>`;
+    }
+  };
+  
   const displayAppliances = (recipe) => {
     const appliancesGreen = document.getElementById("greens");  
     const appliances = getAppliances(recipe);
@@ -129,6 +141,15 @@ const filterResearch = (recipe) => {
       ustensilsGreen.innerHTML += `<li class="tags_green tags">${ustensils[i]}</li>`;   
     }
   }
+  
+  const tagResearch = (recipe) => {
+    const searchBlueInput = document.getElementById('input-blue');
+  
+    searchBlueInput.addEventListener('keyup', function () {
+      const searchIngredient = searchBlueInput.value.toLowerCase();
+      displayIngredients(recipe, searchIngredient);
+    });
+  };
 
 const blueTags = document.getElementById("blues");
 const greenTags = document.getElementById("greens");
@@ -192,6 +213,7 @@ const init = async () => {
   displayIngredients(recipe);
   displayAppliances(recipe);
   displayUstensils(recipe);
+  tagResearch(recipe)
 };
 
 init();
