@@ -103,16 +103,17 @@ const filterResearch = (recipe) => {
 
     let ingredients = [];
   
-    if (searchIngredient) {
-        for (let i = 0; i < allIngredients.length; i++) {
-          if (allIngredients[i].toLowerCase().includes(searchIngredient)) {
-            ingredients.push(allIngredients[i]);
-          }
-        }
-      } else {
-        ingredients = allIngredients;
+    if (searchIngredient) { // On vérifie si searchIngredient a été fourni
+    for (let i = 0; i < allIngredients.length; i++) {
+      if (allIngredients[i].toLowerCase().includes(searchIngredient)) {
+        ingredients.push(allIngredients[i]);
       }
-   
+    }
+  } else { // Si searchIngredient n'a pas été fourni, on utilise tous les ingrédients
+    ingredients = allIngredients;
+  }
+  
+  
     ingredientBlue.innerHTML = "";
   
     for (let i = 0; i < ingredients.length; i++) {
@@ -120,34 +121,54 @@ const filterResearch = (recipe) => {
     }
   };
   
-  const displayAppliances = (recipe) => {
-    const appliancesGreen = document.getElementById("greens");  
-    const appliances = getAppliances(recipe);
-    
+  const displayAppliances = (recipe, searchAppliance) => {
+    const appliancesGreen = document.getElementById("greens");
+    let appliances = getAppliances(recipe);
+  
+    if (searchAppliance) {
+      appliances = appliances.filter((appliance) => appliance.toLowerCase().includes(searchAppliance));
+    }
+  
     appliancesGreen.innerHTML = "";
-      
+  
     for (let i = 0; i < appliances.length; i++) {
-      appliancesGreen.innerHTML += `<li class="tags_green tags">${appliances[i]}</li>`;   
+      appliancesGreen.innerHTML += `<li class="tags_green tags">${appliances[i]}</li>`;
     }
-  }
-
-  const displayUstensils = (recipe) => {
-    const ustensilsGreen = document.getElementById("reds");  
-    const ustensils = getUstensils(recipe);
-    
+  };
+  
+  const displayUstensils = (recipe, searchUstensil) => {
+    const ustensilsGreen = document.getElementById("reds");
+    let ustensils = getUstensils(recipe);
+  
+    if (searchUstensil) {
+      ustensils = ustensils.filter((ustensil) => ustensil.toLowerCase().includes(searchUstensil));
+    }
+  
     ustensilsGreen.innerHTML = "";
-      
+  
     for (let i = 0; i < ustensils.length; i++) {
-      ustensilsGreen.innerHTML += `<li class="tags_green tags">${ustensils[i]}</li>`;   
+      ustensilsGreen.innerHTML += `<li class="tags_green tags">${ustensils[i]}</li>`;
     }
-  }
+  };
   
   const tagResearch = (recipe) => {
     const searchBlueInput = document.getElementById('input-blue');
+    const searchGreenInput = document.getElementById('input-green');
+    const searchRedInput = document.getElementById('input-red');
   
     searchBlueInput.addEventListener('keyup', function () {
       const searchIngredient = searchBlueInput.value.toLowerCase();
       displayIngredients(recipe, searchIngredient);
+    });
+  
+    searchGreenInput.addEventListener('keyup', function () {
+      const searchAppliance = searchGreenInput.value.toLowerCase();
+      displayAppliances(recipe, searchAppliance);
+    });
+  
+    searchRedInput.addEventListener('keyup', function () {
+      const searchUstensil = searchRedInput.value.toLowerCase();
+      displayUstensils(recipe, searchUstensil);
     });
   };
 
