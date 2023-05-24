@@ -1,5 +1,6 @@
-let recipe = []
+let recipes = []
 let searchInputValue = ""
+let ingredientTagSelected = []
 
 const loadData = async () => {
   const response = await fetch("recipes.json");
@@ -7,13 +8,13 @@ const loadData = async () => {
   return data;
 };
 
-const displayRecipe = (elements) => {
-  const recipes = document.getElementById("listRecipes");
-  recipes.innerHTML = "";
+const displayRecipe = (recipeList) => {
+  const recipeContainer = document.getElementById("listRecipes");
+  recipeContainer.innerHTML = "";
 
-  for (let i = 0; i < elements.length; i++) {
-    let ficheRecipes = new Recipe(elements[i]);
-    recipes.innerHTML += ficheRecipes.RecipeCardHTML();
+  for (let i = 0; i < recipeList.length; i++) {
+    let recipeCard = new Recipe(recipeList[i]);
+    recipeContainer.innerHTML += recipeCard.RecipeCardHTML();
   }
 };
 
@@ -23,7 +24,7 @@ const filterResearch = () => {
     searchInputValue = searchInput.value.toLowerCase();
 
     if (searchInputValue.length < 3) {
-      displayRecipe(recipe);
+      displayRecipe(recipes);
     } else {
       filterRecipe();
     }
@@ -34,8 +35,8 @@ const filterRecipe = () => {
 
   const result = [];
   
-  for (let i = 0; i < recipe.length; i++) {
-    const item = recipe[i];
+  for (let i = 0; i < recipes.length; i++) {
+    const item = recipes[i];
   
     let isSearchInputValueIncluded = true;
   
@@ -48,35 +49,52 @@ const filterRecipe = () => {
         || item.ingredients.some(element => element.ingredient.toLowerCase().includes(searchInputValue))
       );
     }
+
+    let ingredientSelectedLowerCase = [];
+
+    for (let j = 0; j < ingredientTagSelected.length; j++) {
+      ingredientSelectedLowerCase.push(ingredientTagSelected[j].toLowerCase());
+    }
+
+    let isIngredientTagSelectedIncluded = true;
+
+    if (ingredientTagSelected.length !== 0) {
+      isIngredientTagSelectedIncluded = false;
+      for (let j = 0; j < item.ingredients.length; j++) {
+        if (ingredientSelectedLowerCase.includes(item.ingredients[j].ingredient.toLowerCase())) {
+          isIngredientTagSelectedIncluded = true;
+          break;
+        }
+      }
+    }
   
-    if (isSearchInputValueIncluded) {
+    if (isSearchInputValueIncluded && isIngredientTagSelectedIncluded) {
       result.push(item);
     }
   }
   
-    displayRecipe(result);
+  displayRecipe(result);
 
-    return result;
   }
 
 const getIngredients = (searchInputIngredient) => {
-  let tagIngredients = [];
+  let uniqueIngredientList = [];
   
-  for (const element of recipe) {
+  for (const element of recipes) {
     for (const ingredient of element.ingredients) {
-      tagIngredients.push(ingredient.ingredient);
+      uniqueIngredientList.push(ingredient.ingredient);
     }
   }
   // Élimine les doublons et trie les ingrédients par ordre alphabétique
-  tagIngredients = Array.from(new Set(tagIngredients)).sort(); 
+  uniqueIngredientList = Array.from(new Set(uniqueIngredientList)).sort(); 
 
   let filteredIngredients = [];
 
-  for (const e of tagIngredients) {
-    if (searchInputIngredient && e.toLowerCase().includes(searchInputIngredient)) {
-      filteredIngredients.push(e);
+  for (const singleIngredient of uniqueIngredientList) {
+    if (searchInputIngredient && singleIngredient.toLowerCase().includes(searchInputIngredient)) {
+      filteredIngredients.push(singleIngredient);
     } else if (!searchInputIngredient) {
-      filteredIngredients.push(e);
+      filteredIngredients.push(singleIngredient);
     }
   }
 
@@ -86,7 +104,7 @@ const getIngredients = (searchInputIngredient) => {
 const getAppliances = (searchInputAppliance) => {
   let appliances = [];
   
-  for (const element of recipe) {
+  for (const element of recipes) {
     appliances.push(element.appliance);
   }
   
@@ -107,7 +125,7 @@ const getAppliances = (searchInputAppliance) => {
 const getUstensils = (searchInputUstensil) => {
   let ustensils = [];
   
-  for (const element of recipe) {
+  for (const element of recipes) {
     for (const ustensil of element.ustensils) {
       ustensils.push(ustensil);
     }
@@ -134,7 +152,7 @@ const displayIngredients = (searchInputIngredient) => {
   ingredientBlue.innerHTML = "";
     
   for (let i = 0; i < tagIngredients.length; i++) {
-    ingredientBlue.innerHTML += `<li class="tags_blue tags">${tagIngredients[i]}</li>`;   
+    ingredientBlue.innerHTML += `<li class="tags_blue tags" onclick="onClickIngredient(this)">${tagIngredients[i]}</li>`;   
   }
 }
 
@@ -179,6 +197,14 @@ const tagResearch = () => {
     displayUstensils(searchUstensil);
   });
 };
+
+const onClickIngredient = (context) => {
+  if (ingredientTagSelected.indexOf(context.innerHTML) === -1){
+    ingredientTagSelected.push(context.innerHTML)
+    filterRecipe()
+  }
+  console.log(ingredientTagSelected);
+}
 
 const blueTags = document.getElementById("blues");
 const greenTags = document.getElementById("greens");
@@ -237,8 +263,8 @@ const placeholderRed = document.getElementById("search-input-red");
 
 const init = async () => {
   const data = await loadData();
-  recipe = data.recipes;
-  displayRecipe(recipe);
+  recipes = data.recipes;
+  displayRecipe(recipes);
   filterResearch();
   displayIngredients();
   displayAppliances();
