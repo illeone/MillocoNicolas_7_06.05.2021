@@ -1,7 +1,10 @@
+let recipe = []
+let searchInputValue = ""
+
 const loadData = async () => {
   const response = await fetch("recipes.json");
   const data = await response.json();
-  return data.recipes;
+  return data;
 };
 
 const displayRecipe = (elements) => {
@@ -14,163 +17,168 @@ const displayRecipe = (elements) => {
   }
 };
 
-const filterResearch = (recipe) => {
-    console.log(recipe);
-  
-    const searchInput = document.getElementById('searchTop');
-    searchInput.addEventListener('keyup', function () {
-      const searchInputValue = searchInput.value.toLowerCase();
-  
-      if (searchInputValue.length < 3) {
-        displayRecipe(recipe);
-      } else {
-        filterRecipe(recipe, searchInputValue);
-      }
-    });
-  };
-  
+const filterResearch = () => {
+  const searchInput = document.getElementById('searchTop');
+  searchInput.addEventListener('keyup', function () {
+    searchInputValue = searchInput.value.toLowerCase();
 
-  const filterRecipe = (recipe, searchInputValue) => {
-
-    const result = [];
-  
-    for (let i = 0; i < recipe.length; i++) {
-      const item = recipe[i];
-  
-      let isSearchInputValueIncluded = true;
-  
-      if (searchInputValue) {
-        isSearchInputValueIncluded = (
-          item.description.toLowerCase().includes(searchInputValue)
-          || item.name.toLowerCase().includes(searchInputValue)
-          || item.appliance.toLowerCase().includes(searchInputValue)
-          || item.ustensils.some(element => element.toLowerCase().includes(searchInputValue))
-          || item.ingredients.some(element => element.ingredient.toLowerCase().includes(searchInputValue))
-        );
-      }
-  
-      if (isSearchInputValueIncluded) {
-        result.push(item);
-      }
+    if (searchInputValue.length < 3) {
+      displayRecipe(recipe);
+    } else {
+      filterRecipe();
     }
+  });
+};
+  
+const filterRecipe = () => {
+
+  const result = [];
+  
+  for (let i = 0; i < recipe.length; i++) {
+    const item = recipe[i];
+  
+    let isSearchInputValueIncluded = true;
+  
+    if (searchInputValue) {
+      isSearchInputValueIncluded = (
+        item.description.toLowerCase().includes(searchInputValue)
+        || item.name.toLowerCase().includes(searchInputValue)
+        || item.appliance.toLowerCase().includes(searchInputValue)
+        || item.ustensils.some(element => element.toLowerCase().includes(searchInputValue))
+        || item.ingredients.some(element => element.ingredient.toLowerCase().includes(searchInputValue))
+      );
+    }
+  
+    if (isSearchInputValueIncluded) {
+      result.push(item);
+    }
+  }
   
     displayRecipe(result);
 
     return result;
   }
 
-  const getIngredients = (recipe) => {
-    let ingredients = [];
+const getIngredients = (searchInputIngredient) => {
+  let tagIngredients = [];
+  
+  for (const element of recipe) {
+    for (const ingredient of element.ingredients) {
+      tagIngredients.push(ingredient.ingredient);
+    }
+  }
+  // Élimine les doublons et trie les ingrédients par ordre alphabétique
+  tagIngredients = Array.from(new Set(tagIngredients)).sort(); 
+
+  let filteredIngredients = [];
+
+  for (const e of tagIngredients) {
+    if (searchInputIngredient && e.toLowerCase().includes(searchInputIngredient)) {
+      filteredIngredients.push(e);
+    } else if (!searchInputIngredient) {
+      filteredIngredients.push(e);
+    }
+  }
+
+    return filteredIngredients;
+  }
+
+const getAppliances = (searchInputAppliance) => {
+  let appliances = [];
+  
+  for (const element of recipe) {
+    appliances.push(element.appliance);
+  }
+  
+  appliances = Array.from(new Set(appliances)).sort();
+
+  let filteredAppliances = [];
+
+  for (const e of appliances) {
+    if (searchInputAppliance && e.toLowerCase().includes(searchInputAppliance)) {
+      filteredAppliances.push(e);
+    } else if (!searchInputAppliance) {
+      filteredAppliances.push(e);
+    }
+  }
+  return filteredAppliances;
+}
+
+const getUstensils = (searchInputUstensil) => {
+  let ustensils = [];
+  
+  for (const element of recipe) {
+    for (const ustensil of element.ustensils) {
+      ustensils.push(ustensil);
+    }
+  }
+  
+  ustensils = Array.from(new Set(ustensils)).sort();
+
+  let filteredUstensils = [];
+
+  for (const e of ustensils) {
+    if (searchInputUstensil && e.toLowerCase().includes(searchInputUstensil)) {
+      filteredUstensils.push(e);
+    } else if (!searchInputUstensil) {
+      filteredUstensils.push(e);
+    }
+  }
+  return filteredUstensils
+} 
+
+const displayIngredients = (searchInputIngredient) => {
+  const ingredientBlue = document.getElementById("blues");  
+  const tagIngredients = getIngredients(searchInputIngredient)
+  
+  ingredientBlue.innerHTML = "";
     
-    for (const element of recipe) {
-      for (const ingredient of element.ingredients) {
-        ingredients.push(ingredient.ingredient);
-      }
-    }
+  for (let i = 0; i < tagIngredients.length; i++) {
+    ingredientBlue.innerHTML += `<li class="tags_blue tags">${tagIngredients[i]}</li>`;   
+  }
+}
+
+const displayAppliances = (searchInputAppliance) => {
+  const appliancesGreen = document.getElementById("greens");
+  const tagAppliances = getAppliances(searchInputAppliance)
+  
+  appliancesGreen.innerHTML = "";
     
-    // Élimine les doublons et trie les ingrédients par ordre alphabétique
-    ingredients = Array.from(new Set(ingredients)).sort();
-    return ingredients;
+  for (let i = 0; i < tagAppliances.length; i++) {
+    appliancesGreen.innerHTML += `<li class="tags_green tags">${tagAppliances[i]}</li>`
   }
-
-  const getAppliances = (recipe) => {
-    let appliances = [];
+}
+const displayUstensils = (searchInputUstensil) => {
+  const ustensilRed = document.getElementById("reds");
+  const tagUstensils = getUstensils(searchInputUstensil)
   
-    for (const element of recipe) {
-      appliances.push(element.appliance);
-    }
+  ustensilRed.innerHTML = "";
   
-    appliances = Array.from(new Set(appliances)).sort();
-    return appliances;
+  for (let i = 0; i < tagUstensils.length; i++) {
+    ustensilRed.innerHTML += `<li class="tags_red tags">${tagUstensils[i]}</li>`
   }
+}
 
-  const getUstensils = (recipe) => {
-    let ustensils = [];
+const tagResearch = () => {
+  const searchBlueInput = document.getElementById('input-blue');
+  const searchGreenInput = document.getElementById('input-green');
+  const searchRedInput = document.getElementById('input-red');
   
-    for (const element of recipe) {
-      for (const ustensil of element.ustensils) {
-        ustensils.push(ustensil);
-      }
-    }
+  searchBlueInput.addEventListener('keyup', function () {
+    const searchIngredient = searchBlueInput.value.toLowerCase();
+    displayIngredients(searchIngredient);
+  });
   
-    ustensils = Array.from(new Set(ustensils)).sort();
-    return ustensils;
-  } 
+  searchGreenInput.addEventListener('keyup', function () {
+    const searchAppliance = searchGreenInput.value.toLowerCase();
+    displayAppliances(searchAppliance);
+  });
   
-  const displayIngredients = (recipe, searchIngredient) => {
-    const ingredientBlue = document.getElementById("blues");
-    let allIngredients = getIngredients(recipe);
-
-    let ingredients = [];
-  
-    if (searchIngredient) { // On vérifie si searchIngredient a été fourni
-    for (let i = 0; i < allIngredients.length; i++) {
-      if (allIngredients[i].toLowerCase().includes(searchIngredient)) {
-        ingredients.push(allIngredients[i]);
-      }
-    }
-  } else { // Si searchIngredient n'a pas été fourni, on utilise tous les ingrédients
-    ingredients = allIngredients;
-  }
-  
-  
-    ingredientBlue.innerHTML = "";
-  
-    for (let i = 0; i < ingredients.length; i++) {
-      ingredientBlue.innerHTML += `<li class="tags_blue tags">${ingredients[i]}</li>`;
-    }
-  };
-  
-  const displayAppliances = (recipe, searchAppliance) => {
-    const appliancesGreen = document.getElementById("greens");
-    let appliances = getAppliances(recipe);
-  
-    if (searchAppliance) {
-      appliances = appliances.filter((appliance) => appliance.toLowerCase().includes(searchAppliance));
-    }
-  
-    appliancesGreen.innerHTML = "";
-  
-    for (let i = 0; i < appliances.length; i++) {
-      appliancesGreen.innerHTML += `<li class="tags_green tags">${appliances[i]}</li>`;
-    }
-  };
-  
-  const displayUstensils = (recipe, searchUstensil) => {
-    const ustensilsGreen = document.getElementById("reds");
-    let ustensils = getUstensils(recipe);
-  
-    if (searchUstensil) {
-      ustensils = ustensils.filter((ustensil) => ustensil.toLowerCase().includes(searchUstensil));
-    }
-  
-    ustensilsGreen.innerHTML = "";
-  
-    for (let i = 0; i < ustensils.length; i++) {
-      ustensilsGreen.innerHTML += `<li class="tags_green tags">${ustensils[i]}</li>`;
-    }
-  };
-  
-  const tagResearch = (recipe) => {
-    const searchBlueInput = document.getElementById('input-blue');
-    const searchGreenInput = document.getElementById('input-green');
-    const searchRedInput = document.getElementById('input-red');
-  
-    searchBlueInput.addEventListener('keyup', function () {
-      const searchIngredient = searchBlueInput.value.toLowerCase();
-      displayIngredients(recipe, searchIngredient);
-    });
-  
-    searchGreenInput.addEventListener('keyup', function () {
-      const searchAppliance = searchGreenInput.value.toLowerCase();
-      displayAppliances(recipe, searchAppliance);
-    });
-  
-    searchRedInput.addEventListener('keyup', function () {
-      const searchUstensil = searchRedInput.value.toLowerCase();
-      displayUstensils(recipe, searchUstensil);
-    });
-  };
+  searchRedInput.addEventListener('keyup', function () {
+    const searchUstensil = searchRedInput.value.toLowerCase();
+    displayUstensils(searchUstensil);
+  });
+};
 
 const blueTags = document.getElementById("blues");
 const greenTags = document.getElementById("greens");
@@ -228,13 +236,13 @@ const placeholderRed = document.getElementById("search-input-red");
   })
 
 const init = async () => {
-  const recipe = await loadData();
+  const data = await loadData();
+  recipe = data.recipes;
   displayRecipe(recipe);
-  filterResearch(recipe);
-  displayIngredients(recipe);
-  displayAppliances(recipe);
-  displayUstensils(recipe);
-  tagResearch(recipe)
-};
-
+  filterResearch();
+  displayIngredients();
+  displayAppliances();
+  displayUstensils();
+  tagResearch();
+}; 
 init();
