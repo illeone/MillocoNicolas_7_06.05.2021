@@ -201,6 +201,7 @@ const tagResearch = () => {
 const onClickIngredient = (context) => {
   if (ingredientTagSelected.indexOf(context.innerHTML) === -1){
     ingredientTagSelected.push(context.innerHTML)
+    document.getElementById("tags_selected").innerHTML += `<p class="tag_selected_ingredient">${context.innerHTML}</span> </p>`
     filterRecipe()
   }
   console.log(ingredientTagSelected);
