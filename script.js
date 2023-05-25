@@ -60,10 +60,17 @@ const filterRecipe = () => {
     let isIngredientTagSelectedIncluded = true;
 
     if (ingredientTagSelected.length !== 0) {
-      isIngredientTagSelectedIncluded = false;
-      for (let j = 0; j < item.ingredients.length; j++) {
-        if (ingredientSelectedLowerCase.includes(item.ingredients[j].ingredient.toLowerCase())) {
-          isIngredientTagSelectedIncluded = true;
+      isIngredientTagSelectedIncluded = true;
+      for (let j = 0; j < ingredientSelectedLowerCase.length; j++) {
+        let isIngredientInRecipe = false;
+        for (let k = 0; k < item.ingredients.length; k++) {
+          if (ingredientSelectedLowerCase[j] === item.ingredients[k].ingredient.toLowerCase()) {
+            isIngredientInRecipe = true;
+            break;
+          }
+        }
+        if (!isIngredientInRecipe) {
+          isIngredientTagSelectedIncluded = false;
           break;
         }
       }
@@ -99,7 +106,7 @@ const getIngredients = (searchInputIngredient) => {
   }
 
   uniqueIngredientList = filteredIngredients;
-    // Ajuste la liste d'ingrédients à afficher en fonction des recettes filtrées
+
   let menuIngredient = [];
   for (const element of recipeFiltered) {
     for (const ingredient of element.ingredients) {
@@ -107,7 +114,6 @@ const getIngredients = (searchInputIngredient) => {
     }
   }
   
-  // Filtrage final des ingrédients en fonction des recettes affichées et des tags sélectionnés
   filteredIngredients = [];
   for (const e of uniqueIngredientList) {
     if (menuIngredient.length == 0 || (menuIngredient.includes(e.toLowerCase()) && !ingredientTagSelected.includes(e))) {
