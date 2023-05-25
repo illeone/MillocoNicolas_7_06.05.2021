@@ -1,5 +1,6 @@
 let recipes = []
 let searchInputValue = ""
+let recipeFiltered = []
 let ingredientTagSelected = []
 
 const loadData = async () => {
@@ -72,9 +73,8 @@ const filterRecipe = () => {
       result.push(item);
     }
   }
-  
+  recipeFiltered = result
   displayRecipe(result);
-
   }
 
 const getIngredients = (searchInputIngredient) => {
@@ -98,8 +98,25 @@ const getIngredients = (searchInputIngredient) => {
     }
   }
 
-    return filteredIngredients;
+  uniqueIngredientList = filteredIngredients;
+    // Ajuste la liste d'ingrédients à afficher en fonction des recettes filtrées
+  let menuIngredient = [];
+  for (const element of recipeFiltered) {
+    for (const ingredient of element.ingredients) {
+      menuIngredient.push(ingredient.ingredient.toLowerCase());
+    }
   }
+  
+  // Filtrage final des ingrédients en fonction des recettes affichées et des tags sélectionnés
+  filteredIngredients = [];
+  for (const e of uniqueIngredientList) {
+    if (menuIngredient.length == 0 || (menuIngredient.includes(e.toLowerCase()) && !ingredientTagSelected.includes(e))) {
+      filteredIngredients.push(e);
+    }
+  }
+
+  return filteredIngredients;
+}
 
 const getAppliances = (searchInputAppliance) => {
   let appliances = [];
@@ -202,7 +219,8 @@ const onClickIngredient = (context) => {
   if (ingredientTagSelected.indexOf(context.innerHTML) === -1){
     ingredientTagSelected.push(context.innerHTML)
     document.getElementById("tags_selected").innerHTML += `<p class="tag_selected_ingredient">${context.innerHTML}</span> </p>`
-    filterRecipe()
+    filterRecipe();
+    displayIngredients();
   }
   console.log(ingredientTagSelected);
 }
