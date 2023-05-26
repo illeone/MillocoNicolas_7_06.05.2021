@@ -93,6 +93,8 @@ const filterRecipe = () => {
   }
   recipeFiltered = result
   displayRecipe(result);
+  displayIngredients(); //filtre la liste ingrédient en fonction quand un appareil filtre les recettes
+  displayAppliances();
   }
 
 const getIngredients = (searchInputIngredient) => {
@@ -263,6 +265,7 @@ const onClickAppliance = (context) => {
   if (applianceTagSelected.indexOf(context.innerHTML) === -1){
     applianceTagSelected.push(context.innerHTML)
     filterRecipe()
+    displayAppliances()
   } 
   console.log(applianceTagSelected);
 }
