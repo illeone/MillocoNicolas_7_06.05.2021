@@ -2,6 +2,7 @@ let recipes = []
 let searchInputValue = ""
 let recipeFiltered = []
 let ingredientTagSelected = []
+let applianceTagSelected = [];
 
 const loadData = async () => {
   const response = await fetch("recipes.json");
@@ -75,10 +76,20 @@ const filterRecipe = () => {
         }
       }
     }
-  
-    if (isSearchInputValueIncluded && isIngredientTagSelectedIncluded) {
-      result.push(item);
+
+    let isApplianceTagSelectedIncluded = true;
+
+    if (applianceTagSelected.length !== 0) {
+      isApplianceTagSelectedIncluded = (
+        applianceTagSelected.length === 1
+        && applianceTagSelected[0].toLowerCase() === item.appliance.toLowerCase()
+      );
     }
+
+  
+    if (isSearchInputValueIncluded && isIngredientTagSelectedIncluded && isApplianceTagSelectedIncluded) {
+      result.push(item);
+    }    
   }
   recipeFiltered = result
   displayRecipe(result);
@@ -125,25 +136,42 @@ const getIngredients = (searchInputIngredient) => {
 }
 
 const getAppliances = (searchInputAppliance) => {
-  let appliances = [];
+  let uniqueApplianceList = [];
   
   for (const element of recipes) {
-    appliances.push(element.appliance);
+    uniqueApplianceList.push(element.appliance);
   }
   
-  appliances = Array.from(new Set(appliances)).sort();
+  // Élimine les doublons et trie les appareils par ordre alphabétique
+  uniqueApplianceList = Array.from(new Set(uniqueApplianceList)).sort(); 
 
   let filteredAppliances = [];
 
-  for (const e of appliances) {
-    if (searchInputAppliance && e.toLowerCase().includes(searchInputAppliance)) {
-      filteredAppliances.push(e);
+  for (const singleAppliance of uniqueApplianceList) {
+    if (searchInputAppliance && singleAppliance.toLowerCase().includes(searchInputAppliance)) {
+      filteredAppliances.push(singleAppliance);
     } else if (!searchInputAppliance) {
+      filteredAppliances.push(singleAppliance);
+    }
+  }
+
+  uniqueApplianceList = filteredAppliances;
+
+  let menuAppliance = [];
+  for (const element of recipeFiltered) {
+    menuAppliance.push(element.appliance.toLowerCase());
+  }
+  
+  filteredAppliances = [];
+  for (const e of uniqueApplianceList) {
+    if (menuAppliance.length == 0 || (menuAppliance.includes(e.toLowerCase()) && !applianceTagSelected.includes(e))) {
       filteredAppliances.push(e);
     }
   }
+
   return filteredAppliances;
 }
+
 
 const getUstensils = (searchInputUstensil) => {
   let ustensils = [];
@@ -186,7 +214,7 @@ const displayAppliances = (searchInputAppliance) => {
   appliancesGreen.innerHTML = "";
     
   for (let i = 0; i < tagAppliances.length; i++) {
-    appliancesGreen.innerHTML += `<li class="tags_green tags">${tagAppliances[i]}</li>`
+    appliancesGreen.innerHTML += `<li class="tags_green tags" onclick="onClickAppliance(this)">${tagAppliances[i]}</li>`
   }
 }
 const displayUstensils = (searchInputUstensil) => {
@@ -229,6 +257,14 @@ const onClickIngredient = (context) => {
     displayIngredients();
   }
   console.log(ingredientTagSelected);
+}
+
+const onClickAppliance = (context) => {
+  if (applianceTagSelected.indexOf(context.innerHTML) === -1){
+    applianceTagSelected.push(context.innerHTML)
+    filterRecipe()
+  } 
+  console.log(applianceTagSelected);
 }
 
 const deleteTags = (context, tag, type) => {
