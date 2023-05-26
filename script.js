@@ -224,11 +224,25 @@ const tagResearch = () => {
 const onClickIngredient = (context) => {
   if (ingredientTagSelected.indexOf(context.innerHTML) === -1){
     ingredientTagSelected.push(context.innerHTML)
-    document.getElementById("tags_selected").innerHTML += `<p class="tag_selected_ingredient">${context.innerHTML}</span> </p>`
+    document.getElementById("tags_selected").innerHTML += `<p class="tag_selected_ingredient">${context.innerHTML} <span onclick="deleteTags(this,'${context.innerHTML}','I')"><i class="fa-regular fa-circle-xmark"></i></span> </p>`
     filterRecipe();
     displayIngredients();
   }
   console.log(ingredientTagSelected);
+}
+
+const deleteTags = (context, tag, type) => {
+  if (type === 'I') {
+   const index = ingredientTagSelected.indexOf(tag)
+   if (index !== -1 ) {    
+     ingredientTagSelected.splice(index,1)     
+     context.parentNode.remove() 
+   }
+ }
+
+ displayRecipe(recipes); // permet de réinitialiser les recettes
+ filterRecipe(recipes); // permet de filtrer les recettes avec les tags restant
+ displayIngredients(""); // réinitialise tous les tags ingrédients 
 }
 
 const blueTags = document.getElementById("blues");
