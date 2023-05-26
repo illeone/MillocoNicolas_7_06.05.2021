@@ -263,7 +263,7 @@ const onClickIngredient = (context) => {
 const onClickAppliance = (context) => {
   if (applianceTagSelected.indexOf(context.innerHTML) === -1){
     applianceTagSelected.push(context.innerHTML)
-    document.getElementById("tags_selected").innerHTML += `<p class="tag_selected_appliance"> ${context.innerHTML}</p>`
+    document.getElementById("tags_selected").innerHTML += `<p class="tag_selected_appliance"> ${context.innerHTML} <span onclick="deleteTags(this,'${context.innerHTML}','A')"><i class="fa-regular fa-circle-xmark"></i></span></p>`
     filterRecipe()  
   } 
   console.log(applianceTagSelected);
@@ -276,7 +276,13 @@ const deleteTags = (context, tag, type) => {
      ingredientTagSelected.splice(index,1)     
      context.parentNode.remove() 
    }
- }
+ } else if (type === 'A') {
+  const index = applianceTagSelected.indexOf(tag)
+  if (index !== -1 ) {    
+    applianceTagSelected.splice(index,1)
+    context.parentNode.remove()   
+  }
+}
 
  displayRecipe(recipes); // permet de réinitialiser les recettes
  filterRecipe(recipes); // permet de filtrer les recettes avec les tags restant
