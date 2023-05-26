@@ -256,7 +256,6 @@ const onClickIngredient = (context) => {
     ingredientTagSelected.push(context.innerHTML)
     document.getElementById("tags_selected").innerHTML += `<p class="tag_selected_ingredient">${context.innerHTML} <span onclick="deleteTags(this,'${context.innerHTML}','I')"><i class="fa-regular fa-circle-xmark"></i></span> </p>`
     filterRecipe();
-    displayIngredients();
   }
   console.log(ingredientTagSelected);
 }
@@ -264,8 +263,8 @@ const onClickIngredient = (context) => {
 const onClickAppliance = (context) => {
   if (applianceTagSelected.indexOf(context.innerHTML) === -1){
     applianceTagSelected.push(context.innerHTML)
-    filterRecipe()
-    displayAppliances()
+    document.getElementById("tags_selected").innerHTML += `<p class="tag_selected_appliance"> ${context.innerHTML}</p>`
+    filterRecipe()  
   } 
   console.log(applianceTagSelected);
 }

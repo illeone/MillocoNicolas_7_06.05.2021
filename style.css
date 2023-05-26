@@ -237,6 +237,15 @@ div.list{
   cursor: pointer;
   display: inline-block;  
 }
+.tag_selected_appliance{
+  color: white;
+  background-color: #68D9A5;
+  padding: 10px;
+  margin: 0 10px 0 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: inline-block
+}
 /******************  Recipes Card      ***************************/
 
 main{
