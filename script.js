@@ -3,6 +3,7 @@ let searchInputValue = ""
 let recipeFiltered = []
 let ingredientTagSelected = []
 let applianceTagSelected = [];
+let ustensilTagSelected = []
 
 const loadData = async () => {
   const response = await fetch("recipes.json");
@@ -86,8 +87,20 @@ const filterRecipe = () => {
       );
     }
 
+    let isUstensilTagSelectedIncluded = true;
+
+    if (ustensilTagSelected.length !== 0) {
+      isUstensilTagSelectedIncluded = false;
+      for (let j = 0; j < item.ustensils.length; j++) {
+        if (ustensilTagSelected.includes(item.ustensils[j])) {
+          isUstensilTagSelectedIncluded = true;
+          break;
+        }
+      }
+    }
+
   
-    if (isSearchInputValueIncluded && isIngredientTagSelectedIncluded && isApplianceTagSelectedIncluded) {
+    if (isSearchInputValueIncluded && isIngredientTagSelectedIncluded && isApplianceTagSelectedIncluded && isUstensilTagSelectedIncluded) {
       result.push(item);
     }    
   }
@@ -226,7 +239,7 @@ const displayUstensils = (searchInputUstensil) => {
   ustensilRed.innerHTML = "";
   
   for (let i = 0; i < tagUstensils.length; i++) {
-    ustensilRed.innerHTML += `<li class="tags_red tags">${tagUstensils[i]}</li>`
+    ustensilRed.innerHTML += `<li class="tags_red tags" onclick="onClickUstensil(this)">${tagUstensils[i]}</li>`
   }
 }
 
@@ -267,6 +280,14 @@ const onClickAppliance = (context) => {
     filterRecipe()  
   } 
   console.log(applianceTagSelected);
+}
+
+const onClickUstensil = (context) => {
+  if (ustensilTagSelected.indexOf(context.innerHTML) === -1){
+    ustensilTagSelected.push(context.innerHTML)
+    filterRecipe()
+  }
+  console.log(ustensilTagSelected);
 }
 
 const deleteTags = (context, tag, type) => {
