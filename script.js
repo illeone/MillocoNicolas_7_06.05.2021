@@ -108,6 +108,7 @@ const filterRecipe = () => {
   displayRecipe(result);
   displayIngredients(); //filtre la liste ingrédient en fonction quand un appareil filtre les recettes
   displayAppliances();
+  displayUstensils();
   }
 
 const getIngredients = (searchInputIngredient) => {
@@ -187,29 +188,44 @@ const getAppliances = (searchInputAppliance) => {
   return filteredAppliances;
 }
 
-
 const getUstensils = (searchInputUstensil) => {
-  let ustensils = [];
+  let uniqueUstensilList = [];
   
   for (const element of recipes) {
     for (const ustensil of element.ustensils) {
-      ustensils.push(ustensil);
+      uniqueUstensilList.push(ustensil);
     }
   }
-  
-  ustensils = Array.from(new Set(ustensils)).sort();
+  uniqueUstensilList = Array.from(new Set(uniqueUstensilList)).sort(); 
 
   let filteredUstensils = [];
 
-  for (const e of ustensils) {
-    if (searchInputUstensil && e.toLowerCase().includes(searchInputUstensil)) {
-      filteredUstensils.push(e);
+  for (const singleUstensil of uniqueUstensilList) {
+    if (searchInputUstensil && singleUstensil.toLowerCase().includes(searchInputUstensil)) {
+      filteredUstensils.push(singleUstensil);
     } else if (!searchInputUstensil) {
+      filteredUstensils.push(singleUstensil);
+    }
+  }
+
+  uniqueUstensilList = filteredUstensils;
+
+  let menuUstensils = [];
+  for (const element of recipeFiltered) {
+    for (const ustensil of element.ustensils) {
+      menuUstensils.push(ustensil.toLowerCase());
+    }
+  }
+  
+  filteredUstensils = [];
+  for (const e of uniqueUstensilList) {
+    if (menuUstensils.length == 0 || (menuUstensils.includes(e.toLowerCase()) && !ustensilTagSelected.includes(e))) {
       filteredUstensils.push(e);
     }
   }
-  return filteredUstensils
-} 
+
+  return filteredUstensils;
+}
 
 const displayIngredients = (searchInputIngredient) => {
   const ingredientBlue = document.getElementById("blues");  
