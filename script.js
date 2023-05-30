@@ -105,9 +105,7 @@ const filterRecipe = () => {
         }
       }
     }
-    
-
-  
+     
     if (isSearchInputValueIncluded && isIngredientTagSelectedIncluded && isApplianceTagSelectedIncluded && isUstensilTagSelectedIncluded) {
       result.push(item);
     }    
@@ -309,7 +307,7 @@ const onClickAppliance = (context) => {
 const onClickUstensil = (context) => {
   if (ustensilTagSelected.indexOf(context.innerHTML) === -1){
     ustensilTagSelected.push(context.innerHTML)
-    document.getElementById("tags_selected").innerHTML += `<p class="tag_selected_ustensil"> ${context.innerHTML} </p>`
+    document.getElementById("tags_selected").innerHTML += `<p class="tag_selected_ustensil"> ${context.innerHTML} <span onclick="deleteTags(this,'${context.innerHTML}','U')"><i class="fa-regular fa-circle-xmark"></i></span> </p>`
     filterRecipe()
   }
   console.log(ustensilTagSelected);
@@ -322,17 +320,21 @@ const deleteTags = (context, tag, type) => {
      ingredientTagSelected.splice(index,1)     
      context.parentNode.remove() 
    }
- } else if (type === 'A') {
-  const index = applianceTagSelected.indexOf(tag)
-  if (index !== -1 ) {    
-    applianceTagSelected.splice(index,1)
-    context.parentNode.remove()   
-  }
-}
+  } else if (type === 'A') {
+    const index = applianceTagSelected.indexOf(tag)
+    if (index !== -1 ) {    
+      applianceTagSelected.splice(index,1)
+      context.parentNode.remove()   
+    }
+  } else if (type === 'U') {
+    const index = ustensilTagSelected.indexOf(tag)
+    if (index !== -1 ) {
+      ustensilTagSelected.splice(index,1)
+      context.parentNode.remove()
+    }
+  } 
 
- displayRecipe(recipes); // permet de réinitialiser les recettes
  filterRecipe(recipes); // permet de filtrer les recettes avec les tags restant
- displayIngredients(""); // réinitialise tous les tags ingrédients 
 }
 
 const blueTags = document.getElementById("blues");
