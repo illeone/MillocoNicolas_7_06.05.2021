@@ -301,6 +301,7 @@ const onClickAppliance = (context) => {
 const onClickUstensil = (context) => {
   if (ustensilTagSelected.indexOf(context.innerHTML) === -1){
     ustensilTagSelected.push(context.innerHTML)
+    document.getElementById("tags_selected").innerHTML += `<p class="tag_selected_ustensil"> ${context.innerHTML} </p>`
     filterRecipe()
   }
   console.log(ustensilTagSelected);

@@ -246,6 +246,15 @@ div.list{
   cursor: pointer;
   display: inline-block
 }
+.tag_selected_ustensil{
+  background-color: #ED6455;
+  color: white;
+  padding: 10px;
+  margin: 0 10px 0 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: inline-block
+}
 /******************  Recipes Card      ***************************/
 
 main{
