@@ -90,14 +90,22 @@ const filterRecipe = () => {
     let isUstensilTagSelectedIncluded = true;
 
     if (ustensilTagSelected.length !== 0) {
-      isUstensilTagSelectedIncluded = false;
-      for (let j = 0; j < item.ustensils.length; j++) {
-        if (ustensilTagSelected.includes(item.ustensils[j])) {
-          isUstensilTagSelectedIncluded = true;
+      isUstensilTagSelectedIncluded = true;
+      for (let j = 0; j < ustensilTagSelected.length; j++) {
+        let isUstensilInRecipe = false;
+        for (let k = 0; k < item.ustensils.length; k++) {
+          if (ustensilTagSelected[j].toLowerCase() === item.ustensils[k].toLowerCase()) {
+            isUstensilInRecipe = true;
+            break;
+          }
+        }
+        if (!isUstensilInRecipe) {
+          isUstensilTagSelectedIncluded = false;
           break;
         }
       }
     }
+    
 
   
     if (isSearchInputValueIncluded && isIngredientTagSelectedIncluded && isApplianceTagSelectedIncluded && isUstensilTagSelectedIncluded) {
