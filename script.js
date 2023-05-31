@@ -279,6 +279,27 @@ const tagResearch = () => {
     const searchUstensil = searchRedInput.value.toLowerCase();
     displayUstensils(searchUstensil);
   });
+
+  document.addEventListener('click', function(event) {
+    // Vérifie si l'utilisateur a cliqué sur l'input ou sur l'un des tags
+    const isClickInside = searchBlueInput.contains(event.target)
+      || searchGreenInput.contains(event.target)
+      || searchRedInput.contains(event.target)
+      || document.getElementById('blues').contains(event.target)
+      || document.getElementById('greens').contains(event.target)
+      || document.getElementById('reds').contains(event.target);
+  
+    // Si l'utilisateur a cliqué en dehors de l'input et des tags, cela efface la valeur de l'input et met à jour les listes
+    if (!isClickInside) {
+      searchBlueInput.value = '';
+      searchGreenInput.value = '';
+      searchRedInput.value = '';
+  
+      displayIngredients();
+      displayAppliances();
+      displayUstensils();
+    }
+  });
 };
 
 const onClickIngredient = (context) => {
