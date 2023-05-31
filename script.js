@@ -25,15 +25,10 @@ const filterResearch = () => {
   const searchInput = document.getElementById('searchTop');
   searchInput.addEventListener('keyup', function () {
     searchInputValue = searchInput.value.toLowerCase();
-
-    if (searchInputValue.length < 3) {
-      displayRecipe(recipes);
-    } else {
-      filterRecipe();
-    }
+    filterRecipe();
   });
 };
-  
+
 const filterRecipe = () => {
 
   const result = [];
@@ -43,7 +38,7 @@ const filterRecipe = () => {
   
     let isSearchInputValueIncluded = true;
   
-    if (searchInputValue) {
+    if (searchInputValue.length >= 3) {
       isSearchInputValueIncluded = (
         item.description.toLowerCase().includes(searchInputValue)
         || item.name.toLowerCase().includes(searchInputValue)
