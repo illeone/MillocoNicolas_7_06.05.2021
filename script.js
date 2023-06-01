@@ -19,6 +19,11 @@ const normalizeIngredient = (ingredient) => {
   return ingredient;
 };
 
+ //supprime les parenthèses et leur contenu des ustensiles
+const cleanUstensil = (ustensil) => {
+  return ustensil.replace(/ *\([^)]*\) */g, "");
+};
+
 const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 
 const loadData = async () => {
@@ -31,6 +36,7 @@ const loadData = async () => {
     }
     
     for (let k = 0; k < data.recipes[i].ustensils.length; k++) {
+      data.recipes[i].ustensils[k] = cleanUstensil(data.recipes[i].ustensils[k]);
       data.recipes[i].ustensils[k] = capitalize(data.recipes[i].ustensils[k]);
     }
   }
