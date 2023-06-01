@@ -450,7 +450,7 @@ const borderSearch = document.querySelector(".search");
     borderSearch.style.transform = 'scale(1.01)';
     borderSearch.style.backgroundColor = 'white';
   });
-  
+
   window.addEventListener('mouseup', function(event){
 
     if(event.target !=borderSearch) {
@@ -460,6 +460,27 @@ const borderSearch = document.querySelector(".search");
       borderSearch.style.backgroundColor = '#E7E7E7';
     } 
   })
+
+//flèche pour remonter en haut de la page
+let calcScrollValue = () => {
+  let scrollProgress = document.getElementById("progress");
+  let pos = document.documentElement.scrollTop;
+  let calcHeight =
+    document.documentElement.scrollHeight -
+    document.documentElement.clientHeight;
+  let scrollValue = Math.round((pos * 100) / calcHeight);
+  if (pos > 100) {
+    scrollProgress.style.display = "grid";
+  } else {
+    scrollProgress.style.display = "none";
+  }
+  scrollProgress.addEventListener("click", () => {
+    document.documentElement.scrollTop = 0;
+  });
+  scrollProgress.style.background = `conic-gradient(#D04F4F ${scrollValue}%, #d7d7d7 ${scrollValue}%)`;
+};
+window.onscroll = calcScrollValue;
+
 
 const init = async () => {
   const data = await loadData();

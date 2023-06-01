@@ -451,3 +451,41 @@ width: 120px;
   margin-top: 11px;
   max-height: 9rem;
 }
+
+/******************  Arrow Top  ***************************/
+
+#progress {
+  position: fixed;
+  bottom: 18px;
+  right: 12px;
+  height: 46px;
+  width: 47px;
+  display: none;
+  place-items: center;
+  border-radius: 50%;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.8);
+  cursor: pointer;
+  transition: 0.8s;
+}
+
+#progress-value {
+  display: block;
+  height: calc(100% - 12px);
+  width: calc(100% - 12px);
+  background-color: #D04F4F;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 35px;
+  color: white;
+  transition: 0.5s;
+}
+#progress-value:hover {
+  transition: 0.5s;
+  transform: scale(1.63);
+}
+#progress:hover  {
+  transition: 0.4s;
+  transform: scale(0.8);
+  box-shadow: 0 0 25px rgba(0, 0, 0, 9.8);;
+}
