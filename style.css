@@ -182,7 +182,12 @@ div.list{
   transition: 0.7s;
   width: 5rem;
 }
-
+.tags_blue:hover{
+  background-color: white;
+  color: #3282F7;
+  cursor: pointer;
+  text-decoration: none;
+}
 
 /******** Tags Green ********/
 #selector-green {
@@ -208,6 +213,11 @@ div.list{
   transition: 0.7s;
   width: 4.2rem;
 }
+.tags_green:hover{
+  background-color: white;
+  color: #68D9A5;
+  cursor: pointer;
+}
 
 /******** Tags Red ********/
 #selector-red {
@@ -232,6 +242,11 @@ div.list{
   color: white;
   transition: 0.7s;
   width: 4.8rem;
+}
+.tags_red:hover{
+  background-color: white;
+  color: #ED6455;
+  cursor: pointer;
 }
 
 /******************  Tag Selected   ***************************/
