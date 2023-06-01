@@ -442,6 +442,25 @@ const placeholderRed = document.getElementById("search-input-red");
     } 
   })
 
+const borderSearch = document.querySelector(".search");
+  document.getElementById("searchTop").addEventListener("click", function(inputClick) 
+  {
+    borderSearch.style.boxShadow = ' 0 0 8px 2px grey';
+    borderSearch.style.transition = '0.8s';
+    borderSearch.style.transform = 'scale(1.01)';
+    borderSearch.style.backgroundColor = 'white';
+  });
+  
+  window.addEventListener('mouseup', function(event){
+
+    if(event.target !=borderSearch) {
+      borderSearch.style.boxShadow = 'none'
+      borderSearch.style.transition = '0.8s';
+      borderSearch.style.transform = 'scale(1)';
+      borderSearch.style.backgroundColor = '#E7E7E7';
+    } 
+  })
+
 const init = async () => {
   const data = await loadData();
   recipes = data.recipes;

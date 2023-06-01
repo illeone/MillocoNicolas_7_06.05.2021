@@ -52,6 +52,12 @@ header input {
   transition: 0.4s;
 }
 
+.search:hover .fa-magnifying-glass{
+  transform:rotate(-10deg) scale(1.12);
+  margin-right: 10px;
+  transition: 0.3s;
+}
+
 /* Fin du style du HEAD */
 /*********************************************/
 
