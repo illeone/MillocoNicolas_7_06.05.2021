@@ -33,6 +33,7 @@ const loadData = async () => {
   for (let i = 0; i < data.recipes.length; i++) {
     for (let j = 0; j < data.recipes[i].ingredients.length; j++) {
       data.recipes[i].ingredients[j].ingredient = normalizeIngredient(data.recipes[i].ingredients[j].ingredient);
+      data.recipes[i].ingredients[j].ingredient = capitalize(data.recipes[i].ingredients[j].ingredient);
     }
     
     for (let k = 0; k < data.recipes[i].ustensils.length; k++) {
