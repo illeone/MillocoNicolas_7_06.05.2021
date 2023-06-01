@@ -121,7 +121,7 @@ const getIngredients = (searchInputIngredient) => {
     }
   }
   // Élimine les doublons et trie les ingrédients par ordre alphabétique
-  uniqueIngredientList = Array.from(new Set(uniqueIngredientList)).sort(); 
+  uniqueIngredientList = Array.from(new Set(uniqueIngredientList)).sort((a, b) => a.localeCompare(b, 'fr')); 
 
   let filteredIngredients = [];
 
@@ -197,7 +197,7 @@ const getUstensils = (searchInputUstensil) => {
       uniqueUstensilList.push(ustensil);
     }
   }
-  uniqueUstensilList = Array.from(new Set(uniqueUstensilList)).sort(); 
+  uniqueUstensilList = Array.from(new Set(uniqueUstensilList)).sort((a, b) => a.localeCompare(b, 'fr'));
 
   let filteredUstensils = [];
 
