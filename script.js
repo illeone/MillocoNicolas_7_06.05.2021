@@ -19,6 +19,8 @@ const normalizeIngredient = (ingredient) => {
   return ingredient;
 };
 
+const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+
 const loadData = async () => {
   const response = await fetch("recipes.json");
   let data = await response.json();
@@ -27,12 +29,14 @@ const loadData = async () => {
     for (let j = 0; j < data.recipes[i].ingredients.length; j++) {
       data.recipes[i].ingredients[j].ingredient = normalizeIngredient(data.recipes[i].ingredients[j].ingredient);
     }
+    
+    for (let k = 0; k < data.recipes[i].ustensils.length; k++) {
+      data.recipes[i].ustensils[k] = capitalize(data.recipes[i].ustensils[k]);
+    }
   }
 
   return data;
 };
-
-
 
 const displayRecipe = (recipeList) => {
   const recipeContainer = document.getElementById("listRecipes");
