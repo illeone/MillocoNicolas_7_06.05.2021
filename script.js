@@ -5,11 +5,34 @@ let ingredientTagSelected = []
 let applianceTagSelected = [];
 let ustensilTagSelected = []
 
+const synonyms = {
+  'Crème fraîche': ['crème fraiche', 'crême fraîche'],
+  'banane': ['banane', 'bananes']
+};
+
+const normalizeIngredient = (ingredient) => {
+  for (let key in synonyms) {
+    if (synonyms[key].includes(ingredient.toLowerCase())) {
+      return key;
+    }
+  }
+  return ingredient;
+};
+
 const loadData = async () => {
   const response = await fetch("recipes.json");
-  const data = await response.json();
+  let data = await response.json();
+
+  for (let i = 0; i < data.recipes.length; i++) {
+    for (let j = 0; j < data.recipes[i].ingredients.length; j++) {
+      data.recipes[i].ingredients[j].ingredient = normalizeIngredient(data.recipes[i].ingredients[j].ingredient);
+    }
+  }
+
   return data;
 };
+
+
 
 const displayRecipe = (recipeList) => {
   const recipeContainer = document.getElementById("listRecipes");
