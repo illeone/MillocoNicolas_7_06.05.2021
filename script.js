@@ -64,87 +64,90 @@ const filterResearch = () => {
 };
 
 const filterRecipe = () => {
-
-  const result = [];
   
+  function containsString(str, searchString) {
+    str = str.toLowerCase();
+    searchString = searchString.toLowerCase();
+  
+    for (let i = 0; i < str.length; i++) {
+      let match = true;
+      for (let j = 0; j < searchString.length; j++) {
+        if (i + j >= str.length || str[i + j] !== searchString[j]) {
+          match = false; 
+          break; 
+        }
+      }
+      if (match) {
+        return true;
+      }
+    }
+    return false;
+  }
+  
+
+  function searchElement(array, type, target) {
+    for (let i = 0; i < array.length; i++) {
+      let element = (type === "ustensils") ? array[i] : array[i].ingredient;
+      if (containsString(element, target)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  let filteredRecipes = [];
+
   for (let i = 0; i < recipes.length; i++) {
     const item = recipes[i];
-  
-    let isSearchInputValueIncluded = true;
-  
+
+    let foundInput = searchInputValue.length < 3;
+    let foundIngredient = !ingredientTagSelected.length;
+    let foundUstensils = !ustensilTagSelected.length;
+    let foundAppliance = !applianceTagSelected.length;
+
     if (searchInputValue.length >= 3) {
-      isSearchInputValueIncluded = (
-        item.description.toLowerCase().includes(searchInputValue)
-        || item.name.toLowerCase().includes(searchInputValue)
-        || item.appliance.toLowerCase().includes(searchInputValue)
-        || item.ustensils.some(element => element.toLowerCase().includes(searchInputValue))
-        || item.ingredients.some(element => element.ingredient.toLowerCase().includes(searchInputValue))
-      );
+      foundInput = 
+        containsString(item.description, searchInputValue) ||
+        containsString(item.name, searchInputValue) ||
+        containsString(item.appliance, searchInputValue) ||
+        searchElement(item.ustensils, "ustensils", searchInputValue) ||
+        searchElement(item.ingredients, "ingredients", searchInputValue);
     }
 
-    let ingredientSelectedLowerCase = [];
+    let foundIngredientsCount = 0;
 
     for (let j = 0; j < ingredientTagSelected.length; j++) {
-      ingredientSelectedLowerCase.push(ingredientTagSelected[j].toLowerCase());
-    }
-
-    let isIngredientTagSelectedIncluded = true;
-
-    if (ingredientTagSelected.length !== 0) {
-      isIngredientTagSelectedIncluded = true;
-      for (let j = 0; j < ingredientSelectedLowerCase.length; j++) {
-        let isIngredientInRecipe = false;
-        for (let k = 0; k < item.ingredients.length; k++) {
-          if (ingredientSelectedLowerCase[j] === item.ingredients[k].ingredient.toLowerCase()) {
-            isIngredientInRecipe = true;
-            break;
-          }
-        }
-        if (!isIngredientInRecipe) {
-          isIngredientTagSelectedIncluded = false;
-          break;
-        }
+      if (searchElement(item.ingredients, "ingredients", ingredientTagSelected[j])) {
+        foundIngredientsCount++;
       }
     }
+    foundIngredient = foundIngredientsCount === ingredientTagSelected.length;
 
-    let isApplianceTagSelectedIncluded = true;
+    let foundUstensilsCount = 0;
 
-    if (applianceTagSelected.length !== 0) {
-      isApplianceTagSelectedIncluded = (
-        applianceTagSelected.length === 1
-        && applianceTagSelected[0].toLowerCase() === item.appliance.toLowerCase()
-      );
-    }
-
-    let isUstensilTagSelectedIncluded = true;
-
-    if (ustensilTagSelected.length !== 0) {
-      isUstensilTagSelectedIncluded = true;
-      for (let j = 0; j < ustensilTagSelected.length; j++) {
-        let isUstensilInRecipe = false;
-        for (let k = 0; k < item.ustensils.length; k++) {
-          if (ustensilTagSelected[j].toLowerCase() === item.ustensils[k].toLowerCase()) {
-            isUstensilInRecipe = true;
-            break;
-          }
-        }
-        if (!isUstensilInRecipe) {
-          isUstensilTagSelectedIncluded = false;
-          break;
-        }
+    for (let j = 0; j < ustensilTagSelected.length; j++) {
+      if (searchElement(item.ustensils, "ustensils", ustensilTagSelected[j])) {
+        foundUstensilsCount++;
       }
     }
-     
-    if (isSearchInputValueIncluded && isIngredientTagSelectedIncluded && isApplianceTagSelectedIncluded && isUstensilTagSelectedIncluded) {
-      result.push(item);
-    }    
+    foundUstensils = foundUstensilsCount === ustensilTagSelected.length;
+
+    for (let index = 0; index < applianceTagSelected.length; index++) {
+      foundAppliance = containsString(item.appliance, applianceTagSelected[index]);
+      if (!foundAppliance) break;
+    }
+
+    if (foundInput && foundIngredient && foundUstensils && foundAppliance) {
+      filteredRecipes.push(item);
+    }
   }
-  recipeFiltered = result
-  displayRecipe(result);
-  displayIngredients(); //filtre la liste ingrédient en fonction quand un appareil filtre les recettes
+
+  recipeFiltered = filteredRecipes;
+  displayRecipe(recipeFiltered);
+  displayIngredients(); // Filtre la liste ingrédient en fonction quand un appareil filtre les recettes
   displayAppliances();
   displayUstensils();
-  }
+}
 
 const getIngredients = (searchInputIngredient) => {
   let uniqueIngredientList = [];
@@ -485,6 +488,7 @@ window.onscroll = calcScrollValue;
 const init = async () => {
   const data = await loadData();
   recipes = data.recipes;
+  recipeFiltered = recipes;
   displayRecipe(recipes);
   filterResearch();
   displayIngredients();
