@@ -188,6 +188,18 @@ div.list{
   cursor: pointer;
   text-decoration: none;
 }
+input#input-blue:focus::placeholder {
+  color: #AECDFD;
+  font-size: 19px;  
+  transition: 0.7s;
+  width: inherit;
+  
+}
+input#input-blue:focus {
+  transition: 0.7s;
+  margin-left: 0.8rem;
+  cursor:inherit;
+}
 
 /******** Tags Green ********/
 #selector-green {
@@ -218,6 +230,17 @@ div.list{
   color: #68D9A5;
   cursor: pointer;
 }
+input#input-green:focus::placeholder {
+  color: #acfad7;
+  font-size: 19px;  
+  transition: 0.7s;
+  width: inherit; 
+}
+input#input-green:focus {
+  transition: 0.7s;
+  margin-left: 0.8rem;
+  cursor:inherit;
+}
 
 /******** Tags Red ********/
 #selector-red {
@@ -247,6 +270,17 @@ div.list{
   background-color: white;
   color: #ED6455;
   cursor: pointer;
+}
+input#input-red:focus::placeholder {
+  color: #f6b5ae;
+  font-size: 19px;  
+  transition: 0.7s;
+  width: inherit; 
+}
+input#input-red:focus {
+  transition: 0.7s;
+  margin-left: 0.8rem;
+  cursor:inherit;
 }
 
 /******************  Tag Selected   ***************************/
