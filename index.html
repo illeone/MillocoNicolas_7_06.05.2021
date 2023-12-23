@@ -17,10 +17,12 @@
     </div>
 </header>
 
+<div id="tags_selected"></div>
+
 <nav class="filters">
     <div id="selector-blue" class="selector blue">
       <div class="search-input" role="search" id="search-input-blue">
-        <input type="text" id="input-blue" name="ingredients" placeholder="Ingrédients" aria-label="barre de recherche ingrédient">
+        <input type="text" id="input-blue" name="ingredients" placeholder="Ingrédients à rechercher :" aria-label="barre de recherche ingrédient">
         <span><i class="fa-solid fa-angle-down blue-arrow"></i></span></br>
       </div>
       <div class="list blues">
@@ -30,7 +32,7 @@
   
     <div id="selector-green" class="selector green">
       <div class="search-input" role="search" id="search-input-green">
-        <input type="text" id="input-green" name="appareils" placeholder="Appareils" aria-label="barre de recherche appareils">
+        <input type="text" id="input-green" name="appareils" placeholder="Appareils à rechercher :" aria-label="barre de recherche appareils">
         <span><i class="fa-solid fa-angle-down green-arrow"></i></span></br>
       </div>
       <div class="list greens">
@@ -40,7 +42,7 @@
   
     <div id="selector-red" class="selector red">
       <div class="search-input" role="search" id="search-input-red">
-        <input type="text" id="input-red" name="ustensiles" placeholder="Ustensiles" aria-label="barre de recherche ustensiles">
+        <input type="text" id="input-red" name="ustensiles" placeholder="Ustensiles à rechercher :" aria-label="barre de recherche ustensiles">
         <span><i class="fa-solid fa-angle-down red-arrow"></i></span></br>
       </div>
       <div class="list reds">
@@ -49,7 +51,13 @@
     </div>
 </nav>
 
-<main id="listRecipes"></main>
-  
+<main id="listRecipes"></main>  
+<div id="progress">
+  <span id="progress-value" class="fa-solid fa-circle-arrow-up"></span>
+</div>
 </body>
+
+<script src="script.js"></script>
+<script src="Recipe.js"></script>
+
 </html>
