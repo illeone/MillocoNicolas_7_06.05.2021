@@ -49,9 +49,13 @@ const displayRecipe = (recipeList) => {
   const recipeContainer = document.getElementById("listRecipes");
   recipeContainer.innerHTML = "";
 
-  for (let i = 0; i < recipeList.length; i++) {
-    let recipeCard = new Recipe(recipeList[i]);
-    recipeContainer.innerHTML += recipeCard.RecipeCardHTML();
+  if (recipeList.length === 0) {
+    recipeContainer.innerHTML = `<p>Aucune recette ne correspond à votre critère... vous pouvez chercher « tarte aux pommes », « poisson », etc.</p>`;
+  } else {
+    for (let i = 0; i < recipeList.length; i++) {
+      let recipeCard = new Recipe(recipeList[i]);
+      recipeContainer.innerHTML += recipeCard.RecipeCardHTML();
+    }
   }
 };
 
